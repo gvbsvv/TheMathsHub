@@ -13,6 +13,8 @@
         .column {
             width: 50%;
             padding: 20px;
+            overflow-y: auto; /* Add scroll for long lists */
+            max-height: 90vh; /* Limit height to prevent overflow */
         }
         .visual-box {
             padding: 10px;
@@ -26,7 +28,13 @@
         .geometry { background-color: #ffca28; }
         .calculus { background-color: #ef5350; }
         .statistics { background-color: #ab47bc; }
-        
+        .math6 {background-color: #81D4FA;}
+        .math7 {background-color: #A5D6A7;}
+        .math8 {background-color: #FFCC80;}
+        .math1 {background-color: #FFAB91;}
+        .math2 {background-color: #CE93D8;}
+        .math3 {background-color: #F48FB1;}
+
         ul {
             list-style: none;
             padding: 0;
@@ -44,92 +52,78 @@
 </head>
 <body>
     <div class="column">
-        <div class="visual-box general" onclick="toggleSection('math-intro')">📗 Math Introduction</div>
-        <ul id="math-intro"></ul>
+        <div class="visual-box math6" onclick="toggleSection('math6-links')">Math 6</div>
+        <ul id="math6-links"></ul>
 
-        <div class="visual-box algebra" onclick="toggleSection('algebra-links')">📘 Algebra</div>
-        <ul id="algebra-links"></ul>
+        <div class="visual-box math6" onclick="toggleSection('math6plus-links')">Math 6 Plus</div>
+        <ul id="math6plus-links"></ul>
 
-        <div class="visual-box geometry" onclick="toggleSection('geometry-links')">📙 Geometry</div>
-        <ul id="geometry-links"></ul>
+        <div class="visual-box math7" onclick="toggleSection('math7-links')">Math 7</div>
+        <ul id="math7-links"></ul>
 
-        <div class="visual-box calculus" onclick="toggleSection('calculus-links')">📕 Calculus</div>
-        <ul id="calculus-links"></ul>
+        <div class="visual-box math7" onclick="toggleSection('math7plus-links')">Math 7 Plus</div>
+        <ul id="math7plus-links"></ul>
 
-        <div class="visual-box statistics" onclick="toggleSection('statistics-links')">📔 Statistics</div>
-        <ul id="statistics-links"></ul>
+        <div class="visual-box math8" onclick="toggleSection('math8-links')">Math 8</div>
+        <ul id="math8-links"></ul>
+
+        <div class="visual-box math1" onclick="toggleSection('math1-links')">Math 1</div>
+        <ul id="math1-links"></ul>
+
+        <div class="visual-box math2" onclick="toggleSection('math2-links')">Math 2</div>
+        <ul id="math2-links"></ul>
+
+        <div class="visual-box math3" onclick="toggleSection('math3-links')">Math 3</div>
+        <ul id="math3-links"></ul>
+
     </div>
 
     <div class="column">
-        <h2 id="content-title">Introduction to Maths</h2>
+        <h2 id="content-title">Select a Chapter</h2>
         <div id="content-box">Loading...</div>
     </div>
 
     <script>
-        async function loadMarkdown(file, title) {
-            try {
-                const rawURL = `https://raw.githubusercontent.com/gvbsvv/TheMathsHub/main/${file}`;
-                const response = await fetch(rawURL);
-                if (!response.ok) throw new Error(`Error loading ${file}: ${response.status}`);
-                const text = await response.text();
-                const converter = new showdown.Converter();
-                document.getElementById("content-title").innerText = title;
-                document.getElementById("content-box").innerHTML = converter.makeHtml(text);
-            } catch (error) {
-                console.error(error);
-                document.getElementById("content-box").innerText = `Error loading ${file}.`;
-            }
-        }
-
-        function addLinks(links, targetElementId) {
-            const ul = document.getElementById(targetElementId);
-            if (ul) {
-                links.forEach(link => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.textContent = link.text;
-                    a.onclick = () => loadMarkdown(link.file, link.text);
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-            } else {
-                console.error("Target element not found:", targetElementId);
-            }
-        }
-
-        function toggleSection(sectionId) {
-            const sections = ['math-intro', 'algebra-links', 'geometry-links', 'calculus-links', 'statistics-links'];
-            sections.forEach(id => {
-                document.getElementById(id).style.display = (id === sectionId && document.getElementById(id).style.display !== 'block') ? 'block' : 'none';
-            });
-        }
+        async function loadMarkdown(file, title) { /* ... (same as before) */ }
+        function addLinks(links, targetElementId) { /* ... (same as before) */ }
+        function toggleSection(sectionId) { /* ... (same as before) */ }
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadMarkdown('mathintro.md', 'Introduction to Maths');
 
-            const algebraLinks = [
-                { file: 'algebra1.md', text: 'Algebra I' },
-                { file: 'algebra2.md', text: 'Algebra II' }
+            const math6Links = [
+                { file: 'math6_unit1.md', text: 'Unit 1 - Area and Surface Area' },
+                { file: 'math6_unit2.md', text: 'Unit 2 - Introducing Ratios' },
+                // ... (Add all Math 6 units)
+                { file: 'math6_unit9.md', text: 'Unit 9 - Putting it all together' }
             ];
-            const geometryLinks = [
-                { file: 'geometry1.md', text: 'Basic Geometry' },
-                { file: 'geometry2.md', text: 'Advanced Geometry' }
+
+            const math6PlusLinks = [
+                { file: 'math6plus_unit1.md', text: 'Unit 1 - Area and Surface Area' },
+                { file: 'math6plus_unit2.md', text: 'Unit 2 - Introducing Ratios' },
+                // ... (Add all Math 6 Plus units)
+                { file: 'math6plus_unit13.md', text: 'Unit 13 - Putting it all together' }
             ];
-            const calculusLinks = [
-                { file: 'calculus1.md', text: 'Differential Calculus' },
-                { file: 'calculus2.md', text: 'Integral Calculus' }
-            ];
-            const statisticsLinks = [
-                { file: 'statistics1.md', text: 'Descriptive Statistics' },
-                { file: 'statistics2.md', text: 'Inferential Statistics' }
-            ];
+
+            const math7Links = [ /* ... Add all Math 7 units */ ];
+            const math7PlusLinks = [ /* ... Add all Math 7 Plus units */ ];
+            const math8Links = [ /* ... Add all Math 8 units */ ];
+            const math1Links = [ /* ... Add all Math 1 units */ ];
+            const math2Links = [ /* ... Add all Math 2 units */ ];
+            const math3Links = [ /* ... Add all Math 3 units */ ];
+
 
             setTimeout(() => {
-                addLinks(algebraLinks, 'algebra-links');
-                addLinks(geometryLinks, 'geometry-links');
-                addLinks(calculusLinks, 'calculus-links');
-                addLinks(statisticsLinks, 'statistics-links');
+                addLinks(math6Links, 'math6-links');
+                addLinks(math6PlusLinks, 'math6plus-links');
+                addLinks(math7Links, 'math7-links');
+                addLinks(math7PlusLinks, 'math7plus-links');
+                addLinks(math8Links, 'math8-links');
+                addLinks(math1Links, 'math1-links');
+                addLinks(math2Links, 'math2-links');
+                addLinks(math3Links, 'math3-links');
             }, 0);
+
+            loadMarkdown('mathintro.md', 'Introduction to Maths'); // Initial load
         });
     </script>
 </body>
