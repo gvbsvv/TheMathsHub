@@ -5,55 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Maths Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to The Maths Hub</h1>
-    </header>
     <div class="container">
         <nav class="sidebar">
-            <h2>Math Papers</h2>
-            <ul>
+            <h2>Math Topics</h2>
+            <ul class="topics">
                 <li>
-                    <strong>Algebra</strong>
-                    <ul>
-                        <li><a href="algebra_basics.md" target="content-frame">Basics</a></li>
-                        <li><a href="linear_equations.md" target="content-frame">Linear Equations</a></li>
-                        <li><a href="quadratic_equations.md" target="content-frame">Quadratic Equations</a></li>
+                    <button class="collapsible">Algebra</button>
+                    <ul class="content">
+                        <li><a href="view.html?file=algebra1.md">Algebra I</a></li>
+                        <li><a href="view.html?file=algebra2.md">Algebra II</a></li>
                     </ul>
                 </li>
                 <li>
-                    <strong>Geometry</strong>
-                    <ul>
-                        <li><a href="triangles.md" target="content-frame">Triangles</a></li>
-                        <li><a href="circles.md" target="content-frame">Circles</a></li>
-                        <li><a href="coordinate_geometry.md" target="content-frame">Coordinate Geometry</a></li>
+                    <button class="collapsible">Geometry</button>
+                    <ul class="content">
+                        <li><a href="view.html?file=geometry1.md">Basic Geometry</a></li>
+                        <li><a href="view.html?file=geometry2.md">Advanced Geometry</a></li>
                     </ul>
                 </li>
                 <li>
-                    <strong>Calculus</strong>
-                    <ul>
-                        <li><a href="limits.md" target="content-frame">Limits</a></li>
-                        <li><a href="derivatives.md" target="content-frame">Derivatives</a></li>
-                        <li><a href="integration.md" target="content-frame">Integration</a></li>
+                    <button class="collapsible">Calculus</button>
+                    <ul class="content">
+                        <li><a href="view.html?file=calculus1.md">Differential Calculus</a></li>
+                        <li><a href="view.html?file=calculus2.md">Integral Calculus</a></li>
                     </ul>
                 </li>
                 <li>
-                    <strong>Statistics</strong>
-                    <ul>
-                        <li><a href="mean_median_mode.md" target="content-frame">Mean, Median, Mode</a></li>
-                        <li><a href="probability.md" target="content-frame">Probability</a></li>
-                        <li><a href="hypothesis_testing.md" target="content-frame">Hypothesis Testing</a></li>
+                    <button class="collapsible">Statistics</button>
+                    <ul class="content">
+                        <li><a href="view.html?file=statistics1.md">Descriptive Statistics</a></li>
+                        <li><a href="view.html?file=statistics2.md">Inferential Statistics</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
-        <main>
-            <iframe src="mathintro.md" name="content-frame"></iframe>
+        <main class="content-box">
+            <iframe id="content-frame" src="view.html?file=mathintro.md" name="content-frame"></iframe>
         </main>
     </div>
-    <footer>
-        <p>&copy; 2025 The Maths Hub. All rights reserved.</p>
-    </footer>
 </body>
 </html>
