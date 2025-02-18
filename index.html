@@ -4,47 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Maths Hub</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+        }
+        .column {
+            width: 50%;
+            padding: 20px;
+        }
+        .visual-box {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .general { background-color: #d4e157; }
+        .algebra { background-color: #42a5f5; }
+        .geometry { background-color: #ffca28; }
+        .calculus { background-color: #ef5350; }
+        .statistics { background-color: #ab47bc; }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+            display: none;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="sidebar">
-            <h2>Math Topics</h2>
-            <ul class="topics">
-                <li>
-                    <button class="collapsible">Algebra</button>
-                    <ul class="content">
-                        <li><a href="view.html?file=algebra1.md">Algebra I</a></li>
-                        <li><a href="view.html?file=algebra2.md">Algebra II</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <button class="collapsible">Geometry</button>
-                    <ul class="content">
-                        <li><a href="view.html?file=geometry1.md">Basic Geometry</a></li>
-                        <li><a href="view.html?file=geometry2.md">Advanced Geometry</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <button class="collapsible">Calculus</button>
-                    <ul class="content">
-                        <li><a href="view.html?file=calculus1.md">Differential Calculus</a></li>
-                        <li><a href="view.html?file=calculus2.md">Integral Calculus</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <button class="collapsible">Statistics</button>
-                    <ul class="content">
-                        <li><a href="view.html?file=statistics1.md">Descriptive Statistics</a></li>
-                        <li><a href="view.html?file=statistics2.md">Inferential Statistics</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <main class="content-box">
-            <iframe id="content-frame" src="view.html?file=mathintro.md" name="content-frame"></iframe>
-        </main>
+    <div class="column">
+        <div class="visual-box general" onclick="toggleSection('math-intro')">📗 Math Introduction</div>
+        <ul id="math-intro"></ul>
+
+        <div class="visual-box algebra" onclick="toggleSection('algebra-links')">📘 Algebra</div>
+        <ul id="algebra-links"></ul>
+
+        <div class="visual-box geometry" onclick="toggleSection('geometry-links')">📙 Geometry</div>
+        <ul id="geometry-links"></ul>
+
+        <div class="visual-box calculus" onclick="toggleSection('calculus-links')">📕 Calculus</div>
+        <ul id="calculus-links"></ul>
+
+        <div class="visual-box statistics" onclick="toggleSection('statistics-links')">📔 Statistics</div>
+        <ul id="statistics-links"></ul>
     </div>
+
+    <div class="column">
+        <h2 id="content-title">Introduction to Maths</h2>
+        <div id="content-box">Loading...</div>
+    </div>
+
+    <script>
+        async function loadMarkdown(file, title) {
+            try {
+                const rawURL = `https://raw.githubusercontent.com/gvbsvv/TheMathsHub/main/${file}`;
+                const response = await fetch(rawURL);
+                if (!response.ok) throw new Error(`Error loading ${file}: ${response.status}`);
+                const text = await response.text();
+                const converter = new showdown.Converter();
+                document.getElementById("content-title").innerText = title;
+                document.getElementById("content-box").innerHTML = converter.makeHtml(text);
+            } catch (error) {
+                console.error(error);
+                document.getElementById("content-box").innerText = `Error loading ${file}.`;
+            }
+        }
+
+        function addLinks(links, targetElementId) {
+            const ul = document.getElementById(targetElementId);
+            if (ul) {
+                links.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = link.text;
+                    a.onclick = () => loadMarkdown(link.file, link.text);
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+            } else {
+                console.error("Target element not found:", targetElementId);
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const sections = ['math-intro', 'algebra-links', 'geometry-links', 'calculus-links', 'statistics-links'];
+            sections.forEach(id => {
+                document.getElementById(id).style.display = (id === sectionId && document.getElementById(id).style.display !== 'block') ? 'block' : 'none';
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadMarkdown('mathintro.md', 'Introduction to Maths');
+
+            const algebraLinks = [
+                { file: 'algebra1.md', text: 'Algebra I' },
+                { file: 'algebra2.md', text: 'Algebra II' }
+            ];
+            const geometryLinks = [
+                { file: 'geometry1.md', text: 'Basic Geometry' },
+                { file: 'geometry2.md', text: 'Advanced Geometry' }
+            ];
+            const calculusLinks = [
+                { file: 'calculus1.md', text: 'Differential Calculus' },
+                { file: 'calculus2.md', text: 'Integral Calculus' }
+            ];
+            const statisticsLinks = [
+                { file: 'statistics1.md', text: 'Descriptive Statistics' },
+                { file: 'statistics2.md', text: 'Inferential Statistics' }
+            ];
+
+            setTimeout(() => {
+                addLinks(algebraLinks, 'algebra-links');
+                addLinks(geometryLinks, 'geometry-links');
+                addLinks(calculusLinks, 'calculus-links');
+                addLinks(statisticsLinks, 'statistics-links');
+            }, 0);
+        });
+    </script>
 </body>
 </html>
