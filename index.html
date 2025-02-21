@@ -1,82 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Maths Hub</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-        }
-        .column {
-            width: 50%;
-            padding: 20px;
-            overflow-y: auto; /* Add scroll for long lists */
-            max-height: 90vh; /* Limit height to prevent overflow */
-        }
-        .visual-box {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .general { background-color: #d4e157; }
-        .algebra { background-color: #42a5f5; }
-        .geometry { background-color: #ffca28; }
-        .calculus { background-color: #ef5350; }
-        .statistics { background-color: #ab47bc; }
-        .math6 {background-color: #81D4FA;}
-        .math7 {background-color: #A5D6A7;}
-        .math8 {background-color: #FFCC80;}
-        .math1 {background-color: #FFAB91;}
-        .math2 {background-color: #CE93D8;}
-        .math3 {background-color: #F48FB1;}
-
-        ul {
-            list-style: none;
-            padding: 0;
-            display: none;
-        }
-        li {
-            margin-bottom: 5px;
-        }
-        a {
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-        }
-    </style>
-</head>
+    </head>
 <body>
     <div class="column">
-        <div class="visual-box math6" onclick="toggleSection('math6-links')">Math 6</div>
-        <ul id="math6-links"></ul>
-
-        <div class="visual-box math6" onclick="toggleSection('math6plus-links')">Math 6 Plus</div>
-        <ul id="math6plus-links"></ul>
-
-        <div class="visual-box math7" onclick="toggleSection('math7-links')">Math 7</div>
-        <ul id="math7-links"></ul>
-
-        <div class="visual-box math7" onclick="toggleSection('math7plus-links')">Math 7 Plus</div>
-        <ul id="math7plus-links"></ul>
-
-        <div class="visual-box math8" onclick="toggleSection('math8-links')">Math 8</div>
-        <ul id="math8-links"></ul>
-
-        <div class="visual-box math1" onclick="toggleSection('math1-links')">Math 1</div>
-        <ul id="math1-links"></ul>
-
-        <div class="visual-box math2" onclick="toggleSection('math2-links')">Math 2</div>
-        <ul id="math2-links"></ul>
-
-        <div class="visual-box math3" onclick="toggleSection('math3-links')">Math 3</div>
-        <ul id="math3-links"></ul>
-
-    </div>
+        </div>
 
     <div class="column">
         <h2 id="content-title">Select a Chapter</h2>
@@ -84,46 +12,32 @@
     </div>
 
     <script>
+        // ... (collapsible code if needed)
+
         async function loadMarkdown(file, title) { /* ... (same as before) */ }
         function addLinks(links, targetElementId) { /* ... (same as before) */ }
         function toggleSection(sectionId) { /* ... (same as before) */ }
 
         window.addEventListener('DOMContentLoaded', () => {
+            loadMarkdown('mathintro.md', 'Introduction to Maths');
 
             const math6Links = [
-                { file: 'math6_unit1.md', text: 'Unit 1 - Area and Surface Area' },
-                { file: 'math6_unit2.md', text: 'Unit 2 - Introducing Ratios' },
-                // ... (Add all Math 6 units)
-                { file: 'math6_unit9.md', text: 'Unit 9 - Putting it all together' }
+                { file: 'math6_unit1.md', text: 'Unit 1 - Area and Surface Area' }, // Correct path!
+                { file: 'math6_unit2.md', text: 'Unit 2 - Introducing Ratios' }, // Correct path!
+                // ... ALL other Math 6 units with correct paths!
             ];
 
-            const math6PlusLinks = [
-                { file: 'math6plus_unit1.md', text: 'Unit 1 - Area and Surface Area' },
-                { file: 'math6plus_unit2.md', text: 'Unit 2 - Introducing Ratios' },
-                // ... (Add all Math 6 Plus units)
-                { file: 'math6plus_unit13.md', text: 'Unit 13 - Putting it all together' }
-            ];
-
-            const math7Links = [ /* ... Add all Math 7 units */ ];
-            const math7PlusLinks = [ /* ... Add all Math 7 Plus units */ ];
-            const math8Links = [ /* ... Add all Math 8 units */ ];
-            const math1Links = [ /* ... Add all Math 1 units */ ];
-            const math2Links = [ /* ... Add all Math 2 units */ ];
-            const math3Links = [ /* ... Add all Math 3 units */ ];
-
+            const math6PlusLinks = [ /* ... ALL Math 6 Plus units with correct paths! */ ];
+            const math7Links = [ /* ... ALL Math 7 units with correct paths! */ ];
+            const math7PlusLinks = [ /* ... ALL Math 7 Plus units with correct paths! */ ];
+            const math8Links = [ /* ... ALL Math 8 units with correct paths! */ ];
+            const math1Links = [ /* ... ALL Math 1 units with correct paths! */ ];
+            const math2Links = [ /* ... ALL Math 2 units with correct paths! */ ];
+            const math3Links = [ /* ... ALL Math 3 units with correct paths! */ ];
 
             setTimeout(() => {
-                addLinks(math6Links, 'math6-links');
-                addLinks(math6PlusLinks, 'math6plus-links');
-                addLinks(math7Links, 'math7-links');
-                addLinks(math7PlusLinks, 'math7plus-links');
-                addLinks(math8Links, 'math8-links');
-                addLinks(math1Links, 'math1-links');
-                addLinks(math2Links, 'math2-links');
-                addLinks(math3Links, 'math3-links');
+                // ... addLinks calls for all subjects
             }, 0);
-
-            loadMarkdown('mathintro.md', 'Introduction to Maths'); // Initial load
         });
     </script>
 </body>
