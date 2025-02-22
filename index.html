@@ -13,8 +13,6 @@
         .column {
             width: 50%;
             padding: 20px;
-            overflow-y: auto; /* Add scroll for long lists */
-            max-height: 90vh; /* Limit height to prevent overflow */
         }
         .visual-box {
             padding: 10px;
@@ -34,7 +32,6 @@
         .math1 {background-color: #FFAB91;}
         .math2 {background-color: #CE93D8;}
         .math3 {background-color: #F48FB1;}
-
         ul {
             list-style: none;
             padding: 0;
@@ -75,42 +72,73 @@
 
         <div class="visual-box math3" onclick="toggleSection('math3-links')">Math 3</div>
         <ul id="math3-links"></ul>
-
     </div>
 
     <div class="column">
-        <h2 id="content-title">Select a Chapter</h2>
+        <h2 id="content-title">Introduction to Maths</h2>
         <div id="content-box">Loading...</div>
     </div>
 
     <script>
-        async function loadMarkdown(file, title) { /* ... (same as before) */ }
-        function addLinks(links, targetElementId) { /* ... (same as before) */ }
-        function toggleSection(sectionId) { /* ... (same as before) */ }
+        async function loadMarkdown(file, title) {
+            try {
+                const rawURL = `https://raw.githubusercontent.com/gvbsvv/TheMathsHub/main/${file}`;
+                const response = await fetch(rawURL);
+                if (!response.ok) throw new Error(`Error loading ${file}: ${response.status}`);
+                const text = await response.text();
+                const converter = new showdown.Converter();
+                document.getElementById("content-title").innerText = title;
+                document.getElementById("content-box").innerHTML = converter.makeHtml(text);
+            } catch (error) {
+                console.error(error);
+                document.getElementById("content-box").innerText = `Error loading ${file}.`;
+            }
+        }
+
+        function addLinks(links, targetElementId) {
+            const ul = document.getElementById(targetElementId);
+            if (ul) {
+                links.forEach(link => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.textContent = link.text;
+                    a.onclick = () => loadMarkdown(link.file, link.text);
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+            } else {
+                console.error("Target element not found:", targetElementId);
+            }
+        }
+
+        function toggleSection(sectionId) {
+            const sections = ['math6-links', 'math6plus-links', 'math7-links', 'math7plus-links', 'math8-links', 'math1-links', 'math2-links', 'math3-links'];
+            sections.forEach(id => {
+                document.getElementById(id).style.display = (id === sectionId && document.getElementById(id).style.display !== 'block') ? 'block' : 'none';
+            });
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
+            loadMarkdown('mathintro.md', 'Introduction to Maths');
 
             const math6Links = [
                 { file: 'math6_unit1.md', text: 'Unit 1 - Area and Surface Area' },
                 { file: 'math6_unit2.md', text: 'Unit 2 - Introducing Ratios' },
-                // ... (Add all Math 6 units)
                 { file: 'math6_unit9.md', text: 'Unit 9 - Putting it all together' }
             ];
 
             const math6PlusLinks = [
                 { file: 'math6plus_unit1.md', text: 'Unit 1 - Area and Surface Area' },
                 { file: 'math6plus_unit2.md', text: 'Unit 2 - Introducing Ratios' },
-                // ... (Add all Math 6 Plus units)
                 { file: 'math6plus_unit13.md', text: 'Unit 13 - Putting it all together' }
             ];
 
-            const math7Links = [ /* ... Add all Math 7 units */ ];
-            const math7PlusLinks = [ /* ... Add all Math 7 Plus units */ ];
-            const math8Links = [ /* ... Add all Math 8 units */ ];
-            const math1Links = [ /* ... Add all Math 1 units */ ];
-            const math2Links = [ /* ... Add all Math 2 units */ ];
-            const math3Links = [ /* ... Add all Math 3 units */ ];
-
+            const math7Links = [];
+            const math7PlusLinks = [];
+            const math8Links = [];
+            const math1Links = [];
+            const math2Links = [];
+            const math3Links = [];
 
             setTimeout(() => {
                 addLinks(math6Links, 'math6-links');
@@ -122,8 +150,6 @@
                 addLinks(math2Links, 'math2-links');
                 addLinks(math3Links, 'math3-links');
             }, 0);
-
-            loadMarkdown('mathintro.md', 'Introduction to Maths'); // Initial load
         });
     </script>
 </body>
